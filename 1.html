@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id='addLeak'>增加泄漏点</div>
+  <div >点击次数<span id ='clickcount'>0</span></div>
+  <script>
+var count = 0;
+var leakedNodes = [];
+
+function createNode(text) {
+    var div = document.createElement("div"),
+        innerDiv = document.createElement("div");
+    innerDiv.appendChild(document.createTextNode(text + " - "+ new Date().toTimeString()));
+    div.appendChild(innerDiv);
+    return div;
+}
+
+function createLeakedNodes() {
+    var i;
+    for (i = 0; i < 20000; i++) {
+        leakedNodes.push(createNode("Leaked:" + i));
+    }
+}
+
+function createGCNodes() {
+    var i;
+    for (i = 0; i < 20000; i++) {
+        createNode("Collected:" + i);
+    }
+}
+
+  function createNodes() {
+      createLeakedNodes();
+      createGCNodes();
+  }
+
+      document.getElementById('addLeak').addEventListener('click', function() {
+          createNodes();
+        count++ ;
+        document.getElementById('clickcount').innerHTML = count;
+
+      })
+
+
+
+
+
+  </script>
+</body>
+</html>
